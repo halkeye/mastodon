@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :update]
     resource :preferences, only: [:show, :update]
     resource :import, only: [:show, :create]
+    resources :invitations
 
     resource :export, only: [:show]
     namespace :exports, constraints: { format: :csv } do

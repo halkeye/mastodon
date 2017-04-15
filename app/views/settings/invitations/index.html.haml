@@ -1,0 +1,30 @@
+- content_for :page_title do
+  = t('settings.invitation.index')
+
+%table.table
+  %thead
+    %tr
+      %th Username
+      %th Domain
+      %th= fa_icon 'paper-plane-o'
+      %th
+  %tbody
+    - @invitations.each do |invitation|
+      %tr
+        %td= invitation.username
+        %td
+          - if account.local?
+            Local
+          - elsif account.subscribed?
+            %i.fa.fa-check
+          - else
+            %i.fa.fa-times
+        %td
+          = table_link_to 'circle', 'Web', web_path("accounts/#{account.id}")
+          = table_link_to 'globe', 'Public', TagManager.instance.url_for(account)
+          = table_link_to 'pencil', 'Edit', admin_account_path(account.id)
+
+= paginate @invitations
+
+.simple_form{ style: 'max-width: 100%' }
+  = link_to t('settings.invitation.new'), new_settings_invitation_path, class: 'block-button'
